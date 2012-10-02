@@ -19,7 +19,7 @@ lightning_strain_relief_r = 4.1/2;
 
 // How much more it leans back from perfectly 90 up
 //
-plug_angle = -15 ; // -8;
+plug_angle = -18 ; // -8;
 
 // thickness of the base this is all mounted on
 //
@@ -30,7 +30,7 @@ bolt_offset = 18;
 bolt_r = 3.2/2; // M3 bolt
 
 plug_width = 26.9;
-plug_depth = 6.3;
+plug_depth = 6.2;
 // plug_height = 8.13;
 plug_height = lightning_h - 1;
 
@@ -92,7 +92,7 @@ module elevation_dock_adapter() {
             //
             rotate([plug_angle, 0,0]) {
                 translate( v = [0,0, base_thickness] ) {
-                    translate( v = [0,0, (plug_height / 2)-1.6]) {
+                    translate( v = [0,0, (plug_height / 2)-1.45]) {
                         roundRect( size = [ plug_width, plug_depth, plug_height + 1 ],
                             round = plug_depth / 2, center = true );
                     }
@@ -111,20 +111,20 @@ module elevation_dock_adapter() {
         // plug.
         //
         rotate([plug_angle, 0,0]) {
-            translate( v = [0,0,1] ) {
+            translate( v = [0,0,1.1] ) {
                 lightning_plug();
             }
         }
 
         // and we have bolt holes on either side of the base..
         //
-        translate( v = [-bolt_offset, 0.6, -padding] ) {
+        translate( v = [-bolt_offset, 0.7, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
-            hex_nut(3.4, 3);
+            hex_nut(3.5, 3);
         }
-        translate( v = [bolt_offset, 0.6, -padding] ) {
+        translate( v = [bolt_offset, 0.7, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
-            hex_nut(3.4, 3);
+            hex_nut(3.5, 3);
         }
 
         // And a notch cut out of the side for us to run our cable through.
