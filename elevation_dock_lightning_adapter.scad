@@ -17,12 +17,6 @@ lightning_cable_r = 2.5/2;
 lightning_strain_relief_r = 4.1/2;
 
 
-// plug_width = 27.43;
-plug_width = 26.9;
-// plug_depth = 6.4;
-plug_depth = 6.3;
-plug_height = 8.13;
-
 // How much more it leans back from perfectly 90 up
 //
 plug_angle = -9; // -8;
@@ -33,14 +27,12 @@ base_thickness = 2;
 base_width = 46;
 base_depth = 9.4;
 bolt_offset = 18;
-bolt_r = 3/2; // M3 bolt
+bolt_r = 3.2/2; // M3 bolt
 
-// First we import their lightning holder.
-//
-// import "ElevationDock_Lightningholder.stl"
-
-// Then we fill in the area where they have a rectangle cutout for the
-//
+plug_width = 26.9;
+plug_depth = 6.3;
+// plug_height = 8.13;
+plug_height = lightning_h - base_thickness;
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -79,7 +71,8 @@ module elevation_dock_adapter() {
         union() {
             translate( v = [0,0,base_thickness/2]) {
                 difference() {
-                    cube([base_width, base_depth, base_thickness], true);
+                    roundRect( size = [base_width, base_depth, base_thickness], round = base_depth / 2, center = true );
+                    // cube([base_width, base_depth, base_thickness], true);
                     translate( v = [0, -7.65, -((base_thickness/2)+padding)]) {
                         cylinder( h = base_thickness + (padding*2), r = 4.7, $fn = 25 );
                     }
@@ -100,8 +93,8 @@ module elevation_dock_adapter() {
         // plug.
         //
         rotate([plug_angle, 0,0]) {
-            translate( v = [0,0,-1] ) {
-                # lightning_plug();
+            translate( v = [0,0,0.6] ) {
+                lightning_plug();
             }
         }
 
@@ -112,6 +105,17 @@ module elevation_dock_adapter() {
         }
         translate( v = [bolt_offset, 0, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
+        }
+
+        // And a notch cut out of the side for us to run our cable through.
+        //
+        rotate([plug_angle, 0, 0]) {
+            translate( v = [0,4,0]) {
+                cube([lightning_cable_r*2, 8, 30], true);
+            }
+            translate( v = [0,0,-5]) {
+                cylinder(h=10,r=lightning_strain_relief_r, $fn = 25);
+            }
         }
     }
 }
