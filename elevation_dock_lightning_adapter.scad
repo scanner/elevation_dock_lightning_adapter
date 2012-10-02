@@ -19,7 +19,7 @@ lightning_strain_relief_r = 4.1/2;
 
 // How much more it leans back from perfectly 90 up
 //
-plug_angle = -12; // -8;
+plug_angle = -15 ; // -8;
 
 // thickness of the base this is all mounted on
 //
@@ -118,11 +118,11 @@ module elevation_dock_adapter() {
 
         // and we have bolt holes on either side of the base..
         //
-        translate( v = [-bolt_offset, 0, -padding] ) {
+        translate( v = [-bolt_offset, 0.6, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
             hex_nut(3.4, 3);
         }
-        translate( v = [bolt_offset, 0, -padding] ) {
+        translate( v = [bolt_offset, 0.6, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
             hex_nut(3.4, 3);
         }
