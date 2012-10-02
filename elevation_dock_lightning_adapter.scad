@@ -102,8 +102,11 @@ module elevation_dock_adapter() {
 
         // The notch in the base plate.
         //
-        translate( v = [0, -7.7, -padding]) {
-            cylinder( h = base_thickness + (padding*2), r = 5.2, $fn = 25 );
+        translate( v = [0, -5, base_thickness / 2]) {
+            cube([9,5.3,base_thickness + 1], true);
+        }
+        translate( v = [0, -6.2, base_thickness / 2]) {
+            cube([base_width,5.3,base_thickness + 1], true);
         }
 
 
