@@ -19,13 +19,13 @@ lightning_strain_relief_r = 4.1/2;
 
 // How much more it leans back from perfectly 90 up
 //
-plug_angle = -11; // -8;
+plug_angle = -12; // -8;
 
 // thickness of the base this is all mounted on
 //
 base_thickness = 3;
 base_width = 46;
-base_depth = 9.4;
+base_depth = 9;
 bolt_offset = 18;
 bolt_r = 3.2/2; // M3 bolt
 
@@ -83,16 +83,13 @@ module lightning_cable_cutout(height) {
 module elevation_dock_adapter() {
     difference() {
         union() {
-            translate( v = [0,0,base_thickness/2]) {
-                difference() {
-                    roundRect( size = [base_width, base_depth, base_thickness], round = base_depth / 2, center = true );
-                    // cube([base_width, base_depth, base_thickness], true);
-                    translate( v = [0, -7.65, -((base_thickness/2)+padding)]) {
-                        cylinder( h = base_thickness + (padding*2), r = 4.7, $fn = 25 );
-                    }
-                }
-
+            // The base plate
+            //
+            translate( v = [0,0.4,base_thickness/2]) {
+                roundRect( size = [base_width, base_depth, base_thickness], round = base_depth / 2, center = true );
             }
+            // The plug
+            //
             rotate([plug_angle, 0,0]) {
                 translate( v = [0,0, base_thickness] ) {
                     translate( v = [0,0, (plug_height / 2)-1.6]) {
@@ -102,6 +99,13 @@ module elevation_dock_adapter() {
                 }
             }
         }
+
+        // The notch in the base plate.
+        //
+        translate( v = [0, -7.7, -padding]) {
+            cylinder( h = base_thickness + (padding*2), r = 5.2, $fn = 25 );
+        }
+
 
         // The lightning plug shoots up the middle at the same angle as the
         // plug.
@@ -116,11 +120,11 @@ module elevation_dock_adapter() {
         //
         translate( v = [-bolt_offset, 0, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
-            hex_nut(3.35, 2.5);
+            hex_nut(3.4, 3);
         }
         translate( v = [bolt_offset, 0, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
-            hex_nut(3.35, 2.5);
+            hex_nut(3.4, 3);
         }
 
         // And a notch cut out of the side for us to run our cable through.
