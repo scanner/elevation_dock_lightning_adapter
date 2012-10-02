@@ -19,7 +19,7 @@ lightning_strain_relief_r = 4.1/2;
 
 // How much more it leans back from perfectly 90 up
 //
-plug_angle = -9; // -8;
+plug_angle = -11; // -8;
 
 // thickness of the base this is all mounted on
 //
@@ -33,6 +33,20 @@ plug_width = 26.9;
 plug_depth = 6.3;
 // plug_height = 8.13;
 plug_height = lightning_h - 1;
+
+/////////////////////////////////////////////////////////////////////////////
+//
+module hexagon(r) {
+    scale(v = [r, r, 1]) polygon(points=[[1,0],[0.5,sqrt(3)/2],[-0.5,sqrt(3)/2],[-1,0],[-0.5,-sqrt(3)/2],[0.5,-sqrt(3)/2]], paths=[[0,1,2,3,4,5,0]]);
+}
+
+////////////////////////////////////////////////////////////////////////
+//
+// Make a hexagon suitable for differencing out a hex nut.
+//
+module hex_nut(r, h) {
+    linear_extrude(height = h, center = true, convexity = 10, twist = 0) hexagon(r);
+}
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -102,9 +116,11 @@ module elevation_dock_adapter() {
         //
         translate( v = [-bolt_offset, 0, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
+            hex_nut(3.35, 2.5);
         }
         translate( v = [bolt_offset, 0, -padding] ) {
             cylinder( r = bolt_r, h = 10, $fn = 25 );
+            hex_nut(3.35, 2.5);
         }
 
         // And a notch cut out of the side for us to run our cable through.
